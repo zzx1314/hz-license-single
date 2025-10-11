@@ -4,7 +4,6 @@ import java.io.File;
 
 import org.huazhi.client.entity.LicActiviteDto;
 import org.huazhi.client.entity.LicReportDto;
-import org.huazhi.license.proj.entity.LicenseProj;
 import org.huazhi.license.user.entity.SysUser;
 import org.huazhi.license.user.repository.SysUserRepository;
 import org.huazhi.util.AesDecryptorUtil;
@@ -13,7 +12,6 @@ import org.huazhi.util.MD5PasswordEncoder;
 import org.huazhi.util.R;
 import org.jboss.logging.Logger;
 
-import io.vertx.core.json.JsonObject;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 

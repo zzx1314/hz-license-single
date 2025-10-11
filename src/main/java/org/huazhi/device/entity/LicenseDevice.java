@@ -2,7 +2,7 @@ package org.huazhi.device.entity;
 
 import java.time.LocalDateTime;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper=false)
-public class LicenseDevice extends PanacheEntity{
+public class LicenseDevice extends PanacheEntityBase{
     @Id
     @GeneratedValue
 	private Long id;
