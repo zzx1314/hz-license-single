@@ -1,6 +1,6 @@
-package org.huazhi.license.proj.repository;
+package org.huazhi.proj.repository;
 
-import org.huazhi.license.proj.entity.LicenseProj;
+import org.huazhi.proj.entity.LicenseProj;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;

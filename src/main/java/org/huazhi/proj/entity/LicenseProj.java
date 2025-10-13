@@ -1,4 +1,4 @@
-package org.huazhi.license.proj.entity;
+package org.huazhi.proj.entity;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Entity;
@@ -16,14 +16,24 @@ public class LicenseProj extends PanacheEntityBase{
 	private Long id;
 
     /**
-     * 客户ID
+     * 客户名
      */
-    private Integer customerId;
+    private String username;
 
     /**
-     * 特性id
+     * 密码
      */
-    private String featuresId;
+    private String password;
+
+    /**
+     * 证书密码
+     */
+    private String cerPassword;
+
+    /**
+     * 特性名称
+     */
+    private String featuresName;
 
     /**
      * 许可证数量

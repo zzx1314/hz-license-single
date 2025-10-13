@@ -4,6 +4,7 @@ import org.jboss.resteasy.reactive.multipart.FileUpload;
 
 import jakarta.ws.rs.core.Response;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -94,5 +95,58 @@ public class FileUtil {
             return Response.serverError().entity("下载失败: " + e.getMessage()).build();
         }
     }
+
+    /**
+     * 读取文件为字节数组
+     *
+     * @param inputFilePath 文件路径
+     * @return 文件内容的字节数组
+     * @throws IOException IO异常
+     */
+    public static byte[] readBytes(String inputFilePath) throws IOException {
+        Path path = Paths.get(inputFilePath);
+        if (!Files.exists(path)) {
+            throw new FileNotFoundException("文件不存在: " + inputFilePath);
+        }
+        return Files.readAllBytes(path);
+    }
+
+    /**
+     * 将字节数组写入文件
+     *
+     * @param outputFilePath 输出文件路径
+     * @param data           要写入的字节数组
+     * @throws IOException IO异常
+     */
+    public static void writeBytes( byte[] data, String outputFilePath) throws IOException {
+        if (data == null) {
+            throw new IllegalArgumentException("写入内容不能为空");
+        }
+
+        Path path = Paths.get(outputFilePath);
+        Path parent = path.getParent();
+        if (parent != null && !Files.exists(parent)) {
+            Files.createDirectories(parent);
+        }
+
+        Files.write(path, data, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+    }
+
+    /**
+     * 读取文件内容为字符串
+     *
+     * @param filePath 文件路径
+     * @param charset  字符集（例如 StandardCharsets.UTF_8）
+     * @return 文件内容字符串
+     * @throws IOException IO异常
+     */
+    public static String readString(String filePath, java.nio.charset.Charset charset) throws IOException {
+        Path path = Paths.get(filePath);
+        if (!Files.exists(path)) {
+            throw new IOException("文件不存在: " + filePath);
+        }
+        return Files.readString(path, charset);
+    }
+
 }
 
