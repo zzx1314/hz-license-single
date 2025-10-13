@@ -19,8 +19,6 @@ public class SignDataUtil {
     }
 
     public static void signFile(PrivateKey privateKey, String inputFilePath, String signFilePath) throws Exception {
-        // 读取私钥文件
-        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         // 读取输入文件
         byte[] data = FileUtil.readBytes(inputFilePath);
         // 签名
@@ -48,14 +46,5 @@ public class SignDataUtil {
 
         // 将签名写入输出文件
         FileUtil.writeBytes(signature, signFilePath);
-    }
-
-    // 辅助方法：将字节数组转换为十六进制字符串
-    private static String bytesToHex(byte[] bytes) {
-        StringBuilder result = new StringBuilder();
-        for (byte b : bytes) {
-            result.append(String.format("%02x", b));
-        }
-        return result.toString();
     }
 }

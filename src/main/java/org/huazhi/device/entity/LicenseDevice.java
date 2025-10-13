@@ -20,11 +20,6 @@ public class LicenseDevice extends PanacheEntityBase{
 	private Long id;
 
     /**
-     * 项目ID
-     */
-    private Integer projId;
-
-    /**
      * 用户ID
      */
     private Integer userId;

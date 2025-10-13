@@ -4,10 +4,12 @@ import org.jboss.resteasy.reactive.multipart.FileUpload;
 
 import jakarta.ws.rs.core.Response;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.nio.file.*;
 
 public class FileUtil {
@@ -112,6 +114,21 @@ public class FileUtil {
     }
 
     /**
+     * 读取文件为字节数组
+     *
+     * @param file 文件对象
+     * @return 文件内容的字节数组
+     */
+    public static byte[] readBytes(File file)  {
+        try {
+            return Files.readAllBytes(file.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
      * 将字节数组写入文件
      *
      * @param outputFilePath 输出文件路径
@@ -146,6 +163,31 @@ public class FileUtil {
             throw new IOException("文件不存在: " + filePath);
         }
         return Files.readString(path, charset);
+    }
+
+    /**
+     * 将字符串写入文件（自动创建文件和父目录）
+     *
+     * @param content  要写入的内容
+     * @param path     文件路径
+     * @param charset  字符集
+     */
+    public static File writeString(String content, String path, Charset charset) {
+        File file = new File(path);
+        File parent = file.getParentFile();
+
+        // 若目录不存在则创建
+        if (parent != null && !parent.exists()) {
+            parent.mkdirs();
+        }
+
+        try (FileOutputStream fos = new FileOutputStream(file, false)) {
+            fos.write(content.getBytes(charset));
+            fos.flush();
+        } catch (IOException e) {
+            throw new RuntimeException("写入文件失败：" + path, e);
+        }
+        return file;
     }
 
 }

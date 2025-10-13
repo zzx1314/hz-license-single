@@ -12,7 +12,6 @@ public class LicenseDeviceRepository implements PanacheRepository<LicenseDevice>
     public void updateById(LicenseDevice dto) {
         LicenseDevice entity = this.findById(dto.getId());
         if (entity != null) {
-            entity.setProjId(dto.getProjId());
             entity.setUserId(dto.getUserId());
             entity.setActivationCode(dto.getActivationCode());
             entity.setHardwareInfo(dto.getHardwareInfo());
