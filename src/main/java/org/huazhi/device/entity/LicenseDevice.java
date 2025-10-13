@@ -8,9 +8,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 @Data
 @Entity
+@Accessors(chain = true)
 @EqualsAndHashCode(callSuper=false)
 public class LicenseDevice extends PanacheEntityBase{
     @Id

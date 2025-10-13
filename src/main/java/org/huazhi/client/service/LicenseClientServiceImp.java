@@ -2,9 +2,12 @@ package org.huazhi.client.service;
 
 import java.io.File;
 import java.security.PrivateKey;
+import java.time.LocalDateTime;
 
 import org.huazhi.client.entity.LicActiviteDto;
 import org.huazhi.client.entity.LicReportDto;
+import org.huazhi.device.entity.LicenseDevice;
+import org.huazhi.device.repository.LicenseDeviceRepository;
 import org.huazhi.proj.entity.LicenseProj;
 import org.huazhi.proj.repository.LicenseProjRepository;
 import org.huazhi.util.AesDecryptorUtil;
@@ -25,6 +28,9 @@ public class LicenseClientServiceImp implements LicenseClientService {
     String basePath = "/opt/hz/ota/otacert/temp";
     @Inject
     LicenseProjRepository licenseProjRepository;
+
+    @Inject
+    LicenseDeviceRepository licenseDeviceRepository;
 
 
     /**
@@ -90,6 +96,28 @@ public class LicenseClientServiceImp implements LicenseClientService {
     }
 
     private void updateStatusActivation(String activateCode) {
+         LicenseDevice device =  licenseDeviceRepository.find("activateCode", activateCode).firstResult();
+         if (device != null && device.getCerStatus().equals("待激活")) {
+            // 需要判断这个设备是否已经激活过，如果已经激活过则不计数
+            if (device.getActivationNum() == 0) {
+                // 代表没有激活过
+                LicenseProj proj = licenseProjRepository.findById(device.getProjId().longValue());
+                if (proj.getUseLicNum() == null){
+                    proj.setUseLicNum(1);
+                } else {
+                    proj.setUseLicNum(proj.getUseLicNum()+ 1);
+                }
+                licenseProjRepository.updateById(proj);
+            }
+            device.setCerStatus("已激活");
+            device.setActivationTime(LocalDateTime.now());
+            licenseDeviceRepository.updateById(device);
+        } else if (device != null && device.getCerStatus().equals("待更新授权证书")) {
+            device.setCerStatus("已激活");
+            device.setActivationTime(LocalDateTime.now());
+            licenseDeviceRepository.updateById(device);
+        }
+
     }
 
 
