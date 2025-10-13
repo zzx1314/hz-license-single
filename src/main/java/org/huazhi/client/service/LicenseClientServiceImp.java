@@ -3,10 +3,13 @@ package org.huazhi.client.service;
 import java.io.File;
 import java.security.PrivateKey;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.huazhi.client.entity.LicActiviteDto;
+import org.huazhi.client.entity.LicFeatureDto;
 import org.huazhi.client.entity.LicFileDto;
 import org.huazhi.client.entity.LicReportDto;
 import org.huazhi.device.entity.LicenseDevice;
@@ -191,8 +194,15 @@ public class LicenseClientServiceImp implements LicenseClientService {
         licFileDto.setArch(licActiviteDto.getArch());
         licFileDto.setUsername(licActiviteDto.getUsername());
         licFileDto.setProductName(licActiviteDto.getProductName());
-        // TODO： 这里需要根据项目的特性来设置
-        licFileDto.setFeatures(null);
+        String featuresName = proj.getFeaturesName();
+        List<String> features = List.of(featuresName.split(","));
+        List<LicFeatureDto> featureDtos = new ArrayList<>();
+        for (String feature : features) {
+            LicFeatureDto featureDto = new LicFeatureDto();
+            featureDto.setName(feature);
+            featureDtos.add(featureDto);
+        }
+        licFileDto.setFeatures(featureDtos);
         String jsonString = JsonUtil.toJson(licFileDto);
         return FileUtil.writeString(jsonString, basePath + "/license.json", CharsetUtil.UTF_8);
     }
