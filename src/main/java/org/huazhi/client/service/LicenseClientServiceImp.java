@@ -30,7 +30,6 @@ import org.huazhi.util.R;
 import org.huazhi.util.SignDataUtil;
 import org.huazhi.util.ZipUtils;
 import org.jboss.logging.Logger;
-import org.locationtech.jts.util.CollectionUtil;
 
 import io.netty.util.CharsetUtil;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -67,7 +66,7 @@ public class LicenseClientServiceImp implements LicenseClientService {
         }
         log.info("find proj" + JsonUtil.toJson(licenseProj));
         // 3. 检查授权点数
-        R checkAuthNumResult = checkAuthNum(licenseProj, licActiviteDto.getActivateCode());
+        R<Void> checkAuthNumResult = checkAuthNum(licenseProj, licActiviteDto.getActivateCode());
         if (checkAuthNumResult.getCode() != CommonConstants.SUCCESS) {
             return checkAuthNumResult;
         }
@@ -138,7 +137,6 @@ public class LicenseClientServiceImp implements LicenseClientService {
             resultData.put("msg", "need update license certificate");
             return R.ok(resultData);
         }
-        LicenseProj proj = licenseProjRepository.findById(1L);
         if (DateUtil.compare(DateUtil.parse(device.getCerFailureTime().split(",")[1] + " 23:59:59"),
                 DateUtil.date()) < 0) {
             resultData.put("serverCheckCode", 0x80000002);
@@ -194,7 +192,7 @@ public class LicenseClientServiceImp implements LicenseClientService {
     /**
      * 检查授权点数
      */
-    private R checkAuthNum(LicenseProj licenseProj, String activateCode) {
+    private R<Void> checkAuthNum(LicenseProj licenseProj, String activateCode) {
         if (licenseProj.getUseLicNum() == null) {
             licenseProj.setUseLicNum(0);
         }
