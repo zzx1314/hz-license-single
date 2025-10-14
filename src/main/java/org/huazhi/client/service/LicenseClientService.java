@@ -1,5 +1,7 @@
 package org.huazhi.client.service;
 
+import java.io.IOException;
+
 import org.huazhi.client.entity.LicActiviteDto;
 import org.huazhi.client.entity.LicReportDto;
 
@@ -12,7 +14,7 @@ public interface LicenseClientService {
     /**
      * 下载证书
      */
-    Object downloadCer(String cerPath, String activaCode);
+    Object downloadCer(String cerPath, String activaCode) throws IOException;
 
     /**
      * 上报请求

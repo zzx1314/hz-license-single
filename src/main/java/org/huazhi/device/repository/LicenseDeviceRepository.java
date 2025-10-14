@@ -21,6 +21,7 @@ public class LicenseDeviceRepository implements PanacheRepository<LicenseDevice>
             entity.setCerFailureTime(dto.getCerFailureTime());
             entity.setCerStatus(dto.getCerStatus());
             entity.setActivationTime(dto.getActivationTime());
+            entity.setCommTime(dto.getCommTime());
         }
     }
 }
