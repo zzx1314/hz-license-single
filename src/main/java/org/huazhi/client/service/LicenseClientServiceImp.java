@@ -116,7 +116,7 @@ public class LicenseClientServiceImp implements LicenseClientService {
     @Override
     public Object downloadCer(String cerPath, String activaCode) throws IOException {
         log.info("Downloading certificate: " + cerPath + " with activation code: " + activaCode);
-        ZipUtils.zip("/opt/hz/ota/otacert/client/", "/opt/hz/ota/otacert/" + activaCode + ".zip");
+        ZipUtils.zip(basePath + "/client_pub.key", "/opt/hz/ota/otacert/" + activaCode + ".zip");
         return FileUtil.downloadFile("/opt/hz/ota/otacert/" + activaCode + ".zip");
     }
 
