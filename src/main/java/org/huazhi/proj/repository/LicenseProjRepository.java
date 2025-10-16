@@ -14,7 +14,7 @@ public class LicenseProjRepository implements PanacheRepository<LicenseProj> {
         if (entity != null) {
             entity.setUsername(dto.getUsername());
             entity.setPassword(dto.getPassword());
-            entity.setCerPassword(dto.getCerPassword());
+            entity.setPrivateKeyPassword(dto.getPrivateKeyPassword());
             entity.setFeaturesName(dto.getFeaturesName());
             entity.setLiceNum(dto.getLiceNum());
             entity.setLiceTime(dto.getLiceTime());

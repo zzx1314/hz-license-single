@@ -26,9 +26,9 @@ public class LicenseProj extends PanacheEntityBase{
     private String password;
 
     /**
-     * 证书密码
+     * 私钥密码
      */
-    private String cerPassword;
+    private String privateKeyPassword;
 
     /**
      * 特性名称

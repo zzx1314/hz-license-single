@@ -234,7 +234,7 @@ public class LicenseClientServiceImp implements LicenseClientService {
         try {
             // 从key里面获取私钥
             PrivateKey privateKey = PrivateKeyConvUtil.getPrivateKey("clientPassword.key",
-                    licenseProj.getCerPassword());
+                    licenseProj.getPrivateKeyPassword());
             SignDataUtil.signFile(privateKey, licenseFileStr, basePath + "/license.sign");
             return new File(basePath + "/license.sign");
         } catch (Exception e) {
